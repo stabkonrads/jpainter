@@ -2,6 +2,7 @@ package se.miun.stab2300.dt187g.jpaint.geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 /**
@@ -48,12 +49,17 @@ public class Circle extends Shape {
     // TODO fix the method to add the circle correct
     @Override
     public void draw(Graphics g) {
-        int startX = (int) this.points.getFirst().getX() - (int) getRadius();
-        int startY = (int) this.points.getFirst().getY() - (int) getRadius();
-        int correctedDiameter = (int) getRadius() * 2;
+        double radius = getRadius(); 
+        int startX = (int) this.points.getFirst().getX() - (int) radius;
+        int startY = (int) this.points.getFirst().getY() - (int) radius;
+        int correctedDiameter = (int) radius * 2;
+
+        Graphics2D g2 = (Graphics2D) g;
+	    
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        g.setColor(Color.decode(this.getColor()));
-        g.fillOval(startX, startY, correctedDiameter, correctedDiameter);
+        g2.setColor(Color.decode(this.getColor()));
+        g2.fillOval(startX, startY, correctedDiameter, correctedDiameter);
     }
     
     @Override

@@ -201,7 +201,16 @@ public class MenuManager {
 	
 	private ActionListener showInfoAction() {
 		return al -> {
-			// TODO for assignment 5
+			Drawing d = drawingPanel.getDrawing();
+			String drawingName = getDrawingName();
+
+			JOptionPane.showMessageDialog(drawingPanel, 
+						drawingName + "\n" + 
+						"Number of Shapes: " + d.getSize() + "\n" +
+						"Total area: " + d.getTotalArea() + "\n" + 
+						"Total circumference: " + d.getTotalCircumference(), 
+						"Info", 
+						1);
 		};
 	}
 
@@ -217,6 +226,32 @@ public class MenuManager {
 		};
 	}
 
+	// TODO Fix the method to use getTitle from frame. 
+	private String getDrawingName() {
+		Drawing d = drawingPanel.getDrawing();
+		String author = d.getAuthor();
+		String name = d.getName();
 
-    
+		String trimedName = name.trim();
+		String trimedAuthor = author.trim();
+		String buildString = "";
+
+		if(trimedName.isEmpty() && trimedAuthor.isEmpty()) {
+			return "[Unnamed Drawing]";
+		}
+
+		if(!trimedName.isEmpty()) {
+			buildString += trimedName;
+		}
+		else if(!author.isEmpty()) {
+			buildString += "[untitled drawing]";
+		}
+
+		if(!trimedAuthor.isEmpty()) {
+			buildString += " by " + trimedAuthor;
+		}
+
+		return buildString;
+	}
+
 }
