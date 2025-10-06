@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -148,8 +149,14 @@ public class JPaintFrame extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				ColorPanel selectionColor = (ColorPanel) e.getSource();
-				drawingPanel.setDrawColor(selectionColor.getColor());
 				statusBarPanel.updateSelectedColor(selectionColor.getColor());
+			}
+		});
+
+		statusBarPanel.setOnChangeListener(new OnChangeListener<StatusBarPanel>() {
+			@Override
+			public void onChange(StatusBarPanel object) {
+				drawingPanel.setDrawColor((Color) object.getSelectedColor());
 			}
 		});
 
@@ -254,6 +261,11 @@ public class JPaintFrame extends JFrame {
 	
 	public String getDrawingTitle() {
 		return this.drawingTitle;
+	}
+
+	@FunctionalInterface
+	public interface OnChangeListener<T> {
+		void onChange(T object);
 	}
 
 	class CustomMouseAdapter extends MouseAdapter {

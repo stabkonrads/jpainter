@@ -6,6 +6,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import se.miun.stab2300.dt187g.jpaint.gui.JPaintFrame.OnChangeListener;
+
 
 /**
 * This class is used to create the statusbar for the tool coordinates and selectedColor. 
@@ -18,6 +20,7 @@ import javax.swing.JPanel;
 public class StatusBarPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private OnChangeListener<StatusBarPanel> listener;
 
 	private JLabel coordinates;
 	private JPanel selectedColor;
@@ -90,6 +93,8 @@ public class StatusBarPanel extends JPanel {
 	 */
 	public void updateSelectedColor(Color color) {
 		selectedColor.setBackground(color);
+		
+		this.listener.onChange(this);
 		repaint();
 	}
 
@@ -99,7 +104,7 @@ public class StatusBarPanel extends JPanel {
 	}
 	
 	// TODO Create the interface for OnChangeListener
-	// public void setOnChangeListener(OnChangeListener<StatusBarPanel> listener) {
-
-	// }
+	public void setOnChangeListener(OnChangeListener<StatusBarPanel> listener) {
+		this.listener = listener;
+	}
 }
