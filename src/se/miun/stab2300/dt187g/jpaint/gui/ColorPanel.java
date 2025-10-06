@@ -1,0 +1,51 @@
+package se.miun.stab2300.dt187g.jpaint.gui;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+/**
+* This class is used to set the background color of the ColorPanel to the color that is the indata parameter.
+* There is a method that returns the background of the ColorPanel to expose the color of the object.
+* The class extends from JPanel to handle graphical output.
+*
+* @author Stefan Abramsson (stab2300)
+* @version 1.0
+*/
+public class ColorPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	
+	/*
+	 *  Sätt bakgrunden på denna komponent till det
+	 *  Color-objekt som skickas som argument.
+	 */
+	public ColorPanel(Color color) {
+		this.setBackground(color);
+	}
+	
+	/*
+	 * Returnera bakgrunden för detta objekt.
+	 */
+	public Color getColor() {
+		return this.getBackground(); 
+	}
+	
+	/*
+	 * Den här är det inte meningen att ni ska behöva skriva själv.
+	 * Jag tror dock att jag missade att inkludera den i uppgiftsbeskrivingen för
+	 * Uppgift 3.
+	 */
+	public String getColorAsHexString() {
+		var color = this.getBackground();
+		String red = Integer.toHexString(color.getRed());
+		String green = Integer.toHexString(color.getGreen());
+		String blue = Integer.toHexString(color.getBlue());
+		red = red.length() == 1 ? "0"+red : red;
+		green = green.length() == 1 ? "0"+green : green;
+		blue = blue.length() == 1 ? "0"+blue : blue;
+
+        return "#" + red + green + blue;
+	}
+		
+}
