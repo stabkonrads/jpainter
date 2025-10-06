@@ -195,7 +195,19 @@ public class MenuManager {
 
 	private ActionListener createUndoAction() {
 		return al -> {
-			// TODO for assignment 5
+			try {
+				Drawing d = drawingPanel.getDrawing();
+				
+				if(d.getSize() == 0) {
+					return;
+				}
+				int latestShape = d.getSize() - 1;
+
+				drawingPanel.removeShape(latestShape);
+				drawingPanel.repaint();
+			} catch (Exception e) {
+				System.err.println("Error at createUndoAction: " + e.getMessage());
+			}
 		};
 	}
 	
