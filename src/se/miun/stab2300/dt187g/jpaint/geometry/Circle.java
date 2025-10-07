@@ -46,7 +46,6 @@ public class Circle extends Shape {
         System.out.println(toString());
     }
 
-    // TODO fix the method to add the circle correct
     @Override
     public void draw(Graphics g) {
         double radius = getRadius(); 

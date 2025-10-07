@@ -105,11 +105,6 @@ public class JPaintFrame extends JFrame {
 		 * rimligt, exempelvis 100.
 		 */
 		JComboBox<String> shapesComboBox = setCbShapes();
-		// TODO put an actionListener to the combobox
-		// shapesComboBox.addActionListener() {
-			
-			
-		// });
 
 		/*
 		 * 9.
@@ -178,6 +173,11 @@ public class JPaintFrame extends JFrame {
 		c.add(drawingPanel);
 		c.add(statusBarPanel, BorderLayout.PAGE_END);
 
+		Color startColor = Color.BLUE;
+		drawingPanel.setActiveShape(shapesComboBox.getSelectedItem().toString());
+		drawingPanel.setDrawColor(startColor);
+		statusBarPanel.updateSelectedColor(startColor);
+
 		setMenuManager();
 	}
 	
@@ -207,7 +207,6 @@ public class JPaintFrame extends JFrame {
 			String[] shapeStrings = {"Rectangle", "Circle"};
 			JComboBox<String> shapesComboBox = new JComboBox<String>(shapeStrings);
 
-			// TODO fix silent class and make it better
 			shapesComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JComboBox selectedShape = (JComboBox) e.getSource();
@@ -269,8 +268,6 @@ public class JPaintFrame extends JFrame {
 	}
 
 	class CustomMouseAdapter extends MouseAdapter {
-
-		// TODO update the method based on description
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (((Component) e.getSource()).getMousePosition() != null) {
@@ -297,18 +294,17 @@ public class JPaintFrame extends JFrame {
 			statusBarPanel.updateCoordinates(e.getX(), e.getY());
 		}
 
-		// TODO Fix the method to handle mouseevent when mouse is pressed
 		@Override
 		public void mousePressed(MouseEvent e) {
 			drawingPanel.setDrawIsActive(true);
 			drawingPanel.setStartPoint(e.getX(), e.getY());
 		}
 
-		// TODO Fix the method to handle mouse event when the mouse is released
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			drawingPanel.setEndPoint(e.getX(), e.getY());
 			drawingPanel.addShape();
+			repaint();
 			drawingPanel.setDrawIsActive(false);
 		}
 	}

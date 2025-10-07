@@ -42,8 +42,6 @@ public class DrawingPanel extends JPanel {
 	public DrawingPanel() {
 		this.setBackground(Color.WHITE);
 		drawIsActive = false;
-		activeShape = "Rectangle";
-		drawColor = Color.BLUE;
 		drawing = new Drawing();
 	}
 	
@@ -94,7 +92,6 @@ public class DrawingPanel extends JPanel {
 		this.y2 = y2;
 	}
 
-	// TODO fix the method to remove the shape. Removes a shape-object from DP
 	public void removeShape(int index) {
 		drawing.removeShape(index);
 	}

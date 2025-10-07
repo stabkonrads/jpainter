@@ -42,7 +42,6 @@ public class Rectangle extends Shape {
         System.out.println(toString());
     }
 
-    // TODO Check if it is the correct form.
     @Override
     public void draw(Graphics g) {
         int startX = (int) this.points.getFirst().getX();

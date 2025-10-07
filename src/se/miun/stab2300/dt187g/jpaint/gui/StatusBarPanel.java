@@ -86,8 +86,7 @@ public class StatusBarPanel extends JPanel {
 	public void updateCoordinates(int x, int y) {
 		coordinates.setText(x+", " + y);
 	}
-	
-	// TODO Update the method according to the description
+
 	/*
 	 *  Uppdatera JPanel-objektet som visar vald färg med den nya färgen.
 	 */
@@ -98,12 +97,11 @@ public class StatusBarPanel extends JPanel {
 		repaint();
 	}
 
-	// TODO Update method to get selected color, check if it is done.
+
 	public Color getSelectedColor() {
 		return selectedColor.getBackground();
 	}
-	
-	// TODO Create the interface for OnChangeListener
+
 	public void setOnChangeListener(OnChangeListener<StatusBarPanel> listener) {
 		this.listener = listener;
 	}

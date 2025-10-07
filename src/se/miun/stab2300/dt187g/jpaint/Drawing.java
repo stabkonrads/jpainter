@@ -110,7 +110,6 @@ public class Drawing implements Drawable {
         return totalArea;
     }
 
-    // TODO Check if the method is correct and fix the method to remove the shape based on index.
     public void removeShape(int index) {
         shapes.remove(index);
     }
@@ -124,7 +123,6 @@ public class Drawing implements Drawable {
         }
     }
 
-    // TODO update this method to utilize Graphics
     // Iterates through the shapes and draws them on the drawing.
     @Override
     public void draw(Graphics g) {

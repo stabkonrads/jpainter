@@ -214,7 +214,7 @@ public class MenuManager {
 	private ActionListener showInfoAction() {
 		return al -> {
 			Drawing d = drawingPanel.getDrawing();
-			String drawingName = getDrawingName();
+			String drawingName = getDrawingAuthorName();
 
 			JOptionPane.showMessageDialog(drawingPanel, 
 						drawingName + "\n" + 
@@ -238,8 +238,7 @@ public class MenuManager {
 		};
 	}
 
-	// TODO Fix the method to use getTitle from frame. 
-	private String getDrawingName() {
+	private String getDrawingAuthorName() {
 		Drawing d = drawingPanel.getDrawing();
 		String author = d.getAuthor();
 		String name = d.getName();
