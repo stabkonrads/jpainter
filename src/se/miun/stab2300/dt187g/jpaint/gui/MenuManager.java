@@ -3,8 +3,11 @@ package se.miun.stab2300.dt187g.jpaint.gui;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -12,6 +15,7 @@ import javax.swing.KeyStroke;
 
 import se.miun.stab2300.dt187g.jpaint.Drawing;
 import se.miun.stab2300.dt187g.jpaint.DrawingException;
+import se.miun.stab2300.dt187g.jpaint.FileHandler;
 
 /**
  * <h1>MenuManager</h1>
@@ -225,16 +229,56 @@ public class MenuManager {
 						1);
 		};
 	}
-
+	
 	private ActionListener createLoadAction() {
 		return al -> {
 			// TODO for assignment 6
+			try {
+				String currentFolder = System.getProperty("user.dir");
+				JFileChooser chooser = new JFileChooser(currentFolder);
+				int option = chooser.showOpenDialog(drawingPanel);
+				
+				if(option == JFileChooser.APPROVE_OPTION) {
+					Drawing loadedDrawing = FileHandler.load(chooser.getSelectedFile().getName());
+					drawingPanel.setDrawing(loadedDrawing);
+					frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
+					drawingPanel.repaint();
+				}
+
+				// String loadString = JOptionPane.showInputDialog(drawingPanel, "What file would you like to load?");
+
+				// if (loadString.isEmpty()) {
+				// 	return;
+				// }
+				
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(drawingPanel, "Could not open the drawing.", "alert", JOptionPane.ERROR_MESSAGE);
+            	System.err.println("Exception caught at load: " + e.getMessage());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		};
 	}
 
 	private ActionListener createSaveAction() {
 		return al -> {
 			// TODO for assignment 6
+			try {
+
+				Drawing d = drawingPanel.getDrawing();
+				String saveName =JOptionPane.showInputDialog(drawingPanel, "Enter savename for drawing.");
+				String trimedSaveName = saveName.trim();
+				if(trimedSaveName.isEmpty()) {
+					JOptionPane.showConfirmDialog(drawingPanel, "Name cannot be empty.", "Warning.", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				FileHandler.save(d, saveName);
+			} 
+			catch (Exception e) {
+				
+				System.err.println("Generel createSaveAction error: " + e.getMessage());
+				// TODO: handle exception
+			} 
 		};
 	}
 

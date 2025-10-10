@@ -21,6 +21,11 @@ public class Rectangle extends Shape {
         this(new Point(x, y), color);
     }
 
+    public Rectangle(double x1, double y1, double x2, double y2, String color) {
+        this(new Point(x1, y1), color);
+        addPoint(x2, y2);
+    }
+
     public double getWidth() {
         if(!hasEndpoint()) {
             return 0.0;

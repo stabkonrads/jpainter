@@ -114,6 +114,10 @@ public class Drawing implements Drawable {
         shapes.remove(index);
     }
 
+    // TODO create a method that returns shapes calles getShapes()
+    public List<Shape> getShapes() {
+        return shapes;
+    }
 
 
     @Override
