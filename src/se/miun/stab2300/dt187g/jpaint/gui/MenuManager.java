@@ -5,17 +5,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 
 import se.miun.stab2300.dt187g.jpaint.Drawing;
 import se.miun.stab2300.dt187g.jpaint.DrawingException;
 import se.miun.stab2300.dt187g.jpaint.FileHandler;
+import se.miun.stab2300.dt187g.jpaint.geometry.Circle;
+import se.miun.stab2300.dt187g.jpaint.geometry.Rectangle;
+import se.miun.stab2300.dt187g.jpaint.geometry.Shape;
 
 /**
  * <h1>MenuManager</h1>
@@ -30,12 +38,17 @@ public class MenuManager {
     private JPaintFrame frame;
     private DrawingPanel drawingPanel;
     private Menu menu;
-    
+
+	private List<Shape> shapes = drawingPanel.getDrawing().getShapes();
+	// private Predicate<Shape> allShapes = shapes -> true;
+	// private Predicate<Shape> circle = shapes -> shapes.stream().filter();
+
 
     public MenuManager(JPaintFrame frame, DrawingPanel drawingPanel) {
         this.frame = frame;
         this.drawingPanel = drawingPanel;
         this.menu = new Menu();
+		
 		
         createMenu();
     }
@@ -47,7 +60,7 @@ public class MenuManager {
     private void createMenu() {
         createFileMenu();
         createEditMenu();
-        createFilterMenu(); // Empty for now
+        createFilterMenu();
     }
 
     private void createFileMenu() {
@@ -94,6 +107,50 @@ public class MenuManager {
     
     private void createFilterMenu() {
 		// TODO for assignment 6
+		JRadioButton allButton = new JRadioButton("All");
+		allButton.setSelected(true);
+		JRadioButton circleButton = new JRadioButton("Circle");
+		JRadioButton rectangleButton = new JRadioButton("Rectangle");
+
+		// TODO Call drawingpanel and check what shapeFilter that is default
+		drawingPanel.getActiveShape();
+		
+		allButton.addActionListener(event -> {
+			// TODO
+			Predicate<Shape> allShapes = shape -> true;
+			drawingPanel.setShapeFilter(allShapes);
+		});
+
+		circleButton.addActionListener(event -> {
+			Circle c = null;
+			// TODO
+			Predicate<Shape> circle = shape -> shape == c;
+			drawingPanel.setShapeFilter(circle);
+		});
+
+		rectangleButton.addActionListener(event -> {
+			Rectangle r = null;
+			// TODO
+			Predicate<Shape> rectangle = shape -> shape == r;
+			drawingPanel.setShapeFilter(rectangle);
+		});
+
+		@SuppressWarnings("serial")
+		List<JRadioButton> radioButtons = new ArrayList<JRadioButton>() {
+			{
+				add(allButton);
+				add(circleButton);
+				add(rectangleButton);
+			}
+		};
+
+		JMenu jMenu = new JMenu("Filter");
+		ButtonGroup group = new ButtonGroup();
+		for (var rb : radioButtons) {
+			jMenu.add(rb);
+			group.add(rb);
+		}
+		menu.add(jMenu);
 	}
     
     /*
@@ -110,11 +167,13 @@ public class MenuManager {
     
     private ActionListener createNewDrawingAction() {
 		return al -> {
-			String nameInputDialog = JOptionPane.showInputDialog(drawingPanel, "Enter name of the drawing: ", "Enter drawing name", JOptionPane.QUESTION_MESSAGE);
+			String nameInputDialog = JOptionPane.showInputDialog(drawingPanel, "Enter name of the drawing: ", 
+															"Enter drawing name", JOptionPane.QUESTION_MESSAGE);
 			if (nameInputDialog == null)
 				return;
 
-			String authorInputDialog = JOptionPane.showInputDialog(drawingPanel, "Enter name of the author: ", "Enter author name", JOptionPane.QUESTION_MESSAGE);
+			String authorInputDialog = JOptionPane.showInputDialog(drawingPanel, "Enter name of the author: ",
+															"Enter author name", JOptionPane.QUESTION_MESSAGE);
 			if(authorInputDialog == null)
 				return;
 
@@ -264,8 +323,16 @@ public class MenuManager {
 		return al -> {
 			// TODO for assignment 6
 			try {
-
+				// TODO fix the saveDialog
+				// String currentFolder = System.getProperty("user.dir");
+				// JFileChooser chooser = new JFileChooser(currentFolder);
+				
+				// int result = chooser.showSaveDialog(drawingPanel);
+				// if(result == JFileChooser.APPROVE_OPTION) {
+					
+				// }
 				Drawing d = drawingPanel.getDrawing();
+
 				String saveName =JOptionPane.showInputDialog(drawingPanel, "Enter savename for drawing.");
 				String trimedSaveName = saveName.trim();
 				if(trimedSaveName.isEmpty()) {

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.util.function.Predicate;
 
 import javax.swing.JPanel;
 
@@ -28,6 +29,8 @@ public class DrawingPanel extends JPanel {
 	private Color drawColor;
 	private boolean drawIsActive;
 	private String activeShape;
+
+	private Predicate<Shape> shapeFilter;
 
 	private int x1;
 	private int y1;
@@ -72,6 +75,11 @@ public class DrawingPanel extends JPanel {
 
 	public void setDrawIsActive(boolean active) {
 		this.drawIsActive = active;
+	}
+
+	public void setShapeFilter(Predicate<Shape> shapeFilter) {
+		this.shapeFilter = shapeFilter;
+		repaint();
 	}
 
 	public String getActiveShape() {

@@ -61,7 +61,7 @@ public class FileHandler {
                         } else {
                             bw.write("[not specified]");
                         }
-                        //var shapes = drawing.getShapes().stream().map(s -> s.getPoints().stream().map(p -> p.));
+                        
                     
                     
                     
@@ -89,9 +89,7 @@ public class FileHandler {
                             bw.write(stringBuilding);
                         }
                         file.createNewFile();
-                        //ArrayList<String> listOfString = new ArrayList<String>();
-                        //var pathToFile = java.nio.file.Files.write(Path.of(fileName), listOfString, StandardCharsets.UTF_8);
-                        //pathToFile.toFile().createNewFile();
+
                         bw.close();
                         break;
                     case JOptionPane.NO_OPTION:
@@ -103,15 +101,11 @@ public class FileHandler {
             }
                 
             } catch (IOException e) {
-                System.err.println("IOException, error while saving file: " + e.getMessage());// TODO: handle exception
+                System.err.println("IOException, error while saving file: " + e.getMessage());
                 
             }
         }   
     
-
-    // TODO use method showOpenDialog(parent) from JFileChooser to show folderstructure
-    // int option = chooser.showOpenDialog(this)
-    // File file = chooser.getSelectedFile() 
 
     public static Drawing load(String fileName) throws FileNotFoundException {
         Drawing loadedDrawing = new Drawing();

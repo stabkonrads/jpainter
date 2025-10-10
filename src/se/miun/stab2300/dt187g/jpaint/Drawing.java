@@ -113,8 +113,7 @@ public class Drawing implements Drawable {
     public void removeShape(int index) {
         shapes.remove(index);
     }
-
-    // TODO create a method that returns shapes calles getShapes()
+    
     public List<Shape> getShapes() {
         return shapes;
     }
