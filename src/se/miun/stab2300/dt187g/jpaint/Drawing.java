@@ -121,17 +121,15 @@ public class Drawing implements Drawable {
 
     @Override
     public void draw() {
-        for (Shape shape : shapes) {
-            System.out.println(shape.toString());
-        }
+        shapes.stream()
+            .forEach(System.out::println);
     }
 
     // Iterates through the shapes and draws them on the drawing.
     @Override
     public void draw(Graphics g) {
-        for (Shape shape : shapes) {
-                shape.draw(g);
-        }
+        shapes.stream()
+            .forEach(s -> s.draw(g));
     }
 
     @Override

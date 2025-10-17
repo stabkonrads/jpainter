@@ -139,8 +139,10 @@ public class DrawingPanel extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	    drawing.draw(g);
+		super.paintComponent(g);
+		drawing.getShapes().stream()
+			.filter(shapeFilter)
+			.forEach(s -> s.draw(g));
 	    Graphics2D g2 = (Graphics2D) g;
 	    if (drawIsActive) {
 	        g2.setColor(drawColor);

@@ -39,9 +39,9 @@ public class MenuManager {
     private DrawingPanel drawingPanel;
     private Menu menu;
 
-	private List<Shape> shapes = drawingPanel.getDrawing().getShapes();
-	// private Predicate<Shape> allShapes = shapes -> true;
-	// private Predicate<Shape> circle = shapes -> shapes.stream().filter();
+	private Predicate<Shape> allShapes = shape -> true;
+	private Predicate<Shape> circles = shape -> shape instanceof Circle;
+	private Predicate<Shape> rectangles = shape -> shape instanceof Rectangle;
 
 
     public MenuManager(JPaintFrame frame, DrawingPanel drawingPanel) {
@@ -106,33 +106,24 @@ public class MenuManager {
 	}
     
     private void createFilterMenu() {
-		// TODO for assignment 6
 		JRadioButton allButton = new JRadioButton("All");
 		allButton.setSelected(true);
 		JRadioButton circleButton = new JRadioButton("Circle");
 		JRadioButton rectangleButton = new JRadioButton("Rectangle");
 
-		// TODO Call drawingpanel and check what shapeFilter that is default
-		drawingPanel.getActiveShape();
+		drawingPanel.setShapeFilter(allShapes);
 		
 		allButton.addActionListener(event -> {
-			// TODO
 			Predicate<Shape> allShapes = shape -> true;
 			drawingPanel.setShapeFilter(allShapes);
 		});
 
 		circleButton.addActionListener(event -> {
-			Circle c = null;
-			// TODO
-			Predicate<Shape> circle = shape -> shape == c;
-			drawingPanel.setShapeFilter(circle);
+			drawingPanel.setShapeFilter(circles);
 		});
 
 		rectangleButton.addActionListener(event -> {
-			Rectangle r = null;
-			// TODO
-			Predicate<Shape> rectangle = shape -> shape == r;
-			drawingPanel.setShapeFilter(rectangle);
+			drawingPanel.setShapeFilter(rectangles);
 		});
 
 		@SuppressWarnings("serial")
