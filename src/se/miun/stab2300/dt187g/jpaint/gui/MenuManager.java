@@ -327,6 +327,7 @@ public class MenuManager {
 					drawingPanel.setDrawing(loadedDrawing);
 					frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
 					drawingPanel.repaint();
+					drawingPanel.setShapeFilter(allShapes);
 				} catch (FileNotFoundException e) {
 					JOptionPane.showMessageDialog(drawingPanel, 
 						"Could not find a file with that name.", 
