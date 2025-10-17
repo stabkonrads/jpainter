@@ -115,14 +115,18 @@ public class FileHandler {
             for (String string : listOfStrings) {
                 String[] shapeArray = string.split(",");
                 String shapeType = shapeArray[0];
+                int x1 = Integer.parseInt(shapeArray[1]);
+                int y1 = Integer.parseInt(shapeArray[2]);
+                int x2 = Integer.parseInt(shapeArray[3]);
+                int y2 = Integer.parseInt(shapeArray[4]);
+                String color = shapeArray[shapeArray.length-1];
+                
                 if (shapeType.equals("Circle")) {
-                    Circle c = new Circle(Integer.parseInt(shapeArray[1]), Integer.parseInt(shapeArray[2]), 
-                            Integer.parseInt(shapeArray[3]), Integer.parseInt(shapeArray[4]), shapeArray[shapeArray.length-1]);
+                    Circle c = new Circle(x1, y1, x2, y2, color);
                     loadedDrawing.addShape(c);
                 }
                 if (shapeType.equals("Rectangle")) {
-                    Rectangle r = new Rectangle(Integer.parseInt(shapeArray[1]), Integer.parseInt(shapeArray[2]), 
-                            Integer.parseInt(shapeArray[3]), Integer.parseInt(shapeArray[4]), shapeArray[shapeArray.length-1]);
+                    Rectangle r = new Rectangle(x1, y1, x2, y2, color);
 
                     loadedDrawing.addShape(r);
                 }
