@@ -187,16 +187,16 @@ public class JPaintFrame extends JFrame {
 
 	private ArrayList<ColorPanel> setColorsForDrawing() {
 		ArrayList<ColorPanel> colorPanels = new ArrayList<ColorPanel>();
-		colorPanels.add(new ColorPanel(Color.BLUE));
 		colorPanels.add(new ColorPanel(Color.WHITE));
-		colorPanels.add(new ColorPanel(Color.MAGENTA));
-		colorPanels.add(new ColorPanel(Color.YELLOW));
-		colorPanels.add(new ColorPanel(Color.BLACK));
 		colorPanels.add(new ColorPanel(Color.PINK));
+		colorPanels.add(new ColorPanel(Color.RED));
 		colorPanels.add(new ColorPanel(Color.ORANGE));
+		colorPanels.add(new ColorPanel(Color.YELLOW));
 		colorPanels.add(new ColorPanel(Color.GREEN));
 		colorPanels.add(new ColorPanel(Color.CYAN));
-		colorPanels.add(new ColorPanel(Color.RED));
+		colorPanels.add(new ColorPanel(Color.BLUE));
+		colorPanels.add(new ColorPanel(Color.MAGENTA));
+		colorPanels.add(new ColorPanel(Color.BLACK));
 
 
 		return colorPanels;
