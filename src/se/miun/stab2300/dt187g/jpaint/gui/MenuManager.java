@@ -3,6 +3,7 @@ package se.miun.stab2300.dt187g.jpaint.gui;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -283,29 +284,26 @@ public class MenuManager {
 	private ActionListener createLoadAction() {
 		return al -> {
 			// TODO for assignment 6
-			try {
-				String currentFolder = System.getProperty("user.dir");
-				JFileChooser chooser = new JFileChooser(currentFolder);
-				int option = chooser.showOpenDialog(drawingPanel);
-				
-				if(option == JFileChooser.APPROVE_OPTION) {
+			String currentFolder = System.getProperty("user.dir");
+			JFileChooser chooser = new JFileChooser(currentFolder);
+			int option = chooser.showOpenDialog(drawingPanel);
+
+			if(option == JFileChooser.APPROVE_OPTION) {
+				try {
 					Drawing loadedDrawing = FileHandler.load(chooser.getSelectedFile().getName());
 					drawingPanel.setDrawing(loadedDrawing);
 					frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
 					drawingPanel.repaint();
-				}
-
-				// String loadString = JOptionPane.showInputDialog(drawingPanel, "What file would you like to load?");
-
-				// if (loadString.isEmpty()) {
-				// 	return;
-				// }
-				
-			} catch (FileNotFoundException e) {
-				JOptionPane.showMessageDialog(drawingPanel, "Could not open the drawing.", "alert", JOptionPane.ERROR_MESSAGE);
-            	System.err.println("Exception caught at load: " + e.getMessage());
-			} catch (Exception e) {
-				// TODO: handle exception
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(drawingPanel, "Could not open the drawing.", "alert", JOptionPane.ERROR_MESSAGE);
+            		System.err.println("Exception caught at load: " + e.getMessage());
+					e.printStackTrace();
+				} catch (Exception e) {
+					System.err.println("General exception: " + e.getMessage());
+					e.printStackTrace();
+				} 
+			} else {
+				return;
 			}
 		};
 	}
@@ -313,30 +311,49 @@ public class MenuManager {
 	private ActionListener createSaveAction() {
 		return al -> {
 			// TODO for assignment 6
-			try {
-				// TODO fix the saveDialog
-				// String currentFolder = System.getProperty("user.dir");
-				// JFileChooser chooser = new JFileChooser(currentFolder);
-				
-				// int result = chooser.showSaveDialog(drawingPanel);
-				// if(result == JFileChooser.APPROVE_OPTION) {
-					
-				// }
-				Drawing d = drawingPanel.getDrawing();
+			String currentFolder = System.getProperty("user.dir");
+			JFileChooser chooser = new JFileChooser(currentFolder);
+			int result = chooser.showSaveDialog(drawingPanel);
 
-				String saveName =JOptionPane.showInputDialog(drawingPanel, "Enter savename for drawing.");
-				String trimedSaveName = saveName.trim();
-				if(trimedSaveName.isEmpty()) {
-					JOptionPane.showConfirmDialog(drawingPanel, "Name cannot be empty.", "Warning.", JOptionPane.ERROR_MESSAGE);
-					return;
+			if(result == JFileChooser.APPROVE_OPTION) {
+				try {
+					File f = chooser.getSelectedFile();
+					File f2 = new File(currentFolder);
+					String fileName = chooser.getSelectedFile().getName();
+
+					if(!fileName.endsWith(".shape")) {
+						fileName += ".shape";
+						f2.renameTo(new File (fileName));
+					}
+
+					if(f.exists() || f2.exists()) {
+						int actionResult = JOptionPane.showConfirmDialog(drawingPanel, "A file with the same name already exists. Do you want to overwrite the current?", 
+							"File already exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+						
+						if(actionResult == JOptionPane.NO_OPTION) {
+							return;
+						}
+					}
+					Drawing d = drawingPanel.getDrawing();
+					String saveName = chooser.getSelectedFile().getName();
+					String trimmedSaveName = saveName.trim();
+
+					if(trimmedSaveName.isEmpty()) {
+						JOptionPane.showConfirmDialog(drawingPanel, "Name cannot be empty.", 
+							"Warning.", JOptionPane.ERROR_MESSAGE);
+				 		return;
+					}
+
+					FileHandler.save(d, saveName);
+				} catch (Exception e) {
+					JOptionPane.showConfirmDialog(drawingPanel, "An error has occured while saving the drawing.",
+						"Warning", JOptionPane.ERROR_MESSAGE);
+					System.err.println("Exception error: " + e.getMessage());
+					e.printStackTrace();
 				}
-				FileHandler.save(d, saveName);
-			} 
-			catch (Exception e) {
-				
-				System.err.println("Generel createSaveAction error: " + e.getMessage());
-				// TODO: handle exception
-			} 
+			} else {
+				return;
+			}
 		};
 	}
 
