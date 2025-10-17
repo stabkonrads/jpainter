@@ -8,6 +8,7 @@ import java.util.ArrayList;
 /**
 * This abstract class is used for defining the start point/end point and is used by the subclasses.
 * It implements the methods draw from Drawable that makes it possible to print the shapes.
+* Has a public get method for getPoints to make the shapes accessable.
 *
 * @author Stefan Abramsson (stab2300)
 * @version 1.0

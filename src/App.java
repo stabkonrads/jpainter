@@ -1,6 +1,5 @@
 import se.miun.stab2300.dt187g.jpaint.*;
 import se.miun.stab2300.dt187g.jpaint.geometry.Circle;
-import se.miun.stab2300.dt187g.jpaint.geometry.Point;
 import se.miun.stab2300.dt187g.jpaint.geometry.Rectangle;
 
 public class App {

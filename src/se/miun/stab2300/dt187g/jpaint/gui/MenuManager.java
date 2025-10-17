@@ -159,13 +159,17 @@ public class MenuManager {
     
     private ActionListener createNewDrawingAction() {
 		return al -> {
-			String nameInputDialog = JOptionPane.showInputDialog(drawingPanel, "Enter name of the drawing: ", 
-															"Enter drawing name", JOptionPane.QUESTION_MESSAGE);
+			String nameInputDialog = JOptionPane.showInputDialog(drawingPanel, 
+				"Enter name of the drawing: ",
+				"Enter drawing name", 
+				JOptionPane.QUESTION_MESSAGE);
 			if (nameInputDialog == null)
 				return;
 
-			String authorInputDialog = JOptionPane.showInputDialog(drawingPanel, "Enter name of the author: ",
-															"Enter author name", JOptionPane.QUESTION_MESSAGE);
+			String authorInputDialog = JOptionPane.showInputDialog(drawingPanel, 
+				"Enter name of the author: ",
+				"Enter author name", 
+				JOptionPane.QUESTION_MESSAGE);
 			if(authorInputDialog == null)
 				return;
 
@@ -177,23 +181,38 @@ public class MenuManager {
 
 				switch (e.getMessage()) {
 					case "Name can't be null.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(drawingPanel, 
+							e.getMessage(), 
+							"Missing name", 
+							JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;
 					case "Name can't be empty.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(drawingPanel, 
+							e.getMessage(), 
+							"Missing name", 
+							JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;	
 					case "Author cant't be null.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing author", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(drawingPanel, 
+							e.getMessage(), 
+							"Missing author", 
+							JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;
 					case "Author can't be empty.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing author", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(drawingPanel, 
+							e.getMessage(), 
+							"Missing author", 
+							JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;
 					case "Name and author can't be null or empty.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name and author", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(drawingPanel, 
+							e.getMessage(), 
+							"Missing name and author", 
+							JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					default:
 						break;
@@ -204,8 +223,10 @@ public class MenuManager {
 
     private ActionListener createChangeNameAction() {
 		return al -> {
-			String nameInput = JOptionPane.showInputDialog(drawingPanel,"Would you like to change name for drawing?", 
-															"Change name for drawing?", JOptionPane.QUESTION_MESSAGE);
+			String nameInput = JOptionPane.showInputDialog(drawingPanel,
+				"Would you like to change name for drawing?", 
+				"Change name for drawing?", 
+				JOptionPane.QUESTION_MESSAGE);
 			if ( nameInput == null)
 			return;
 
@@ -215,7 +236,10 @@ public class MenuManager {
 				frame.setDrawingTitle(nameInput, d.getAuthor());
 
 			} catch (DrawingException e) {
-				JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), nameInput, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(drawingPanel, 
+					e.getMessage(), 
+					nameInput, 
+					JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 
 			} catch (Exception e) {
@@ -227,8 +251,10 @@ public class MenuManager {
 
 	private ActionListener createChangeAuthorAction() {
 		return al -> {
-			String authorInput = JOptionPane.showInputDialog(drawingPanel,"Would you like to change name of author of the painting?", 
-															"Would you like to change name of author of the painting?", JOptionPane.QUESTION_MESSAGE);
+			String authorInput = JOptionPane.showInputDialog(drawingPanel,
+				"Would you like to change name of author of the painting?", 
+				"Would you like to change name of author of the painting?", 
+				JOptionPane.QUESTION_MESSAGE);
 			if ( authorInput == null)
 			return;
 			
@@ -238,7 +264,10 @@ public class MenuManager {
 				frame.setDrawingTitle(d.getName(), authorInput);;
 				
 			} catch (DrawingException e) {
-				JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), authorInput, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(drawingPanel, 
+					e.getMessage(), 
+					authorInput, 
+					JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 
 			} catch (Exception e) {
@@ -299,7 +328,10 @@ public class MenuManager {
 					frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
 					drawingPanel.repaint();
 				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(drawingPanel, "Could not find a file with that name.", "File not found", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(drawingPanel, 
+						"Could not find a file with that name.", 
+						"File not found", 
+						JOptionPane.WARNING_MESSAGE);
             		System.err.println("Exception caught at load, could not find the file: " + e.getMessage());
 					e.printStackTrace();
 				} catch (Exception e) {
@@ -322,7 +354,6 @@ public class MenuManager {
 			if(result == JFileChooser.APPROVE_OPTION) {
 				try {
 					File f = chooser.getSelectedFile();
-					File f2 = new File(currentFolder);
 					String fileName = chooser.getSelectedFile().getName();
 
 					if(!fileName.endsWith(".shape")) {
@@ -331,8 +362,11 @@ public class MenuManager {
 					}
 
 					if(f.exists()) {
-						int actionResult = JOptionPane.showConfirmDialog(drawingPanel, "A file with the same name already exists. Do you want to overwrite the current?", 
-							"File already exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+						int actionResult = JOptionPane.showConfirmDialog(drawingPanel, 
+							"A file with the same name already exists. Do you want to overwrite the current?", 
+							"File already exists", 
+							JOptionPane.YES_NO_OPTION, 
+							JOptionPane.WARNING_MESSAGE);
 						
 						if(actionResult == JOptionPane.NO_OPTION) {
 							return;
@@ -343,15 +377,19 @@ public class MenuManager {
 					String trimmedSaveName = saveName.trim();
 
 					if(trimmedSaveName.isEmpty()) {
-						JOptionPane.showConfirmDialog(drawingPanel, "Name cannot be empty.", 
-							"Warning.", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showConfirmDialog(drawingPanel, 
+							"Name cannot be empty.", 
+							"Warning.", 
+							JOptionPane.ERROR_MESSAGE);
 				 		return;
 					}
 
 					FileHandler.save(d, saveName);
 				} catch (Exception e) {
-					JOptionPane.showConfirmDialog(drawingPanel, "An error has occured while saving the drawing.",
-						"Warning", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(drawingPanel, 
+						"An error has occured while saving the drawing.",
+						"Warning", 
+						JOptionPane.ERROR_MESSAGE);
 					System.err.println("Exception error: " + e.getMessage());
 					e.printStackTrace();
 				}
