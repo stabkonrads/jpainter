@@ -17,9 +17,6 @@ import se.miun.stab2300.dt187g.jpaint.geometry.Rectangle;
 import se.miun.stab2300.dt187g.jpaint.geometry.Shape;
 
 public class FileHandler {
-    // TODO save(Drawing drawing, String fileName) should check the fileName has .shape as fileextension.
-    // If it does not have that extenstion it must add .shape as filetype.
-    // TODO check if the file exists and ask user about action.
     public static void save(Drawing drawing, String fileName) {
         if(!fileName.endsWith(".shape")) {
             fileName += ".shape";
@@ -115,20 +112,23 @@ public class FileHandler {
             for (String string : listOfStrings) {
                 String[] shapeArray = string.split(",");
                 String shapeType = shapeArray[0];
-                int x1 = Integer.parseInt(shapeArray[1]);
-                int y1 = Integer.parseInt(shapeArray[2]);
-                int x2 = Integer.parseInt(shapeArray[3]);
-                int y2 = Integer.parseInt(shapeArray[4]);
-                String color = shapeArray[shapeArray.length-1];
                 
-                if (shapeType.equals("Circle")) {
-                    Circle c = new Circle(x1, y1, x2, y2, color);
-                    loadedDrawing.addShape(c);
-                }
-                if (shapeType.equals("Rectangle")) {
-                    Rectangle r = new Rectangle(x1, y1, x2, y2, color);
+                if(shapeType.equals("Circle") || shapeType.equals("Rectangle")) {
+                    int x1 = Integer.parseInt(shapeArray[1]);
+                    int y1 = Integer.parseInt(shapeArray[2]);
+                    int x2 = Integer.parseInt(shapeArray[3]);
+                    int y2 = Integer.parseInt(shapeArray[4]);
+                    String color = shapeArray[shapeArray.length-1];
 
-                    loadedDrawing.addShape(r);
+                    if (shapeType.equals("Circle")) {
+                        Circle c = new Circle(x1, y1, x2, y2, color);
+                        loadedDrawing.addShape(c);
+                    }
+                    if (shapeType.equals("Rectangle")) {
+                        Rectangle r = new Rectangle(x1, y1, x2, y2, color);
+                        
+                        loadedDrawing.addShape(r);
+                    }
                 }
             }
 

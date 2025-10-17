@@ -177,23 +177,23 @@ public class MenuManager {
 
 				switch (e.getMessage()) {
 					case "Name can't be null.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name", 0);
+						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;
 					case "Name can't be empty.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name", 0);
+						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;	
 					case "Author cant't be null.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing author", 0);
+						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing author", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;
 					case "Author can't be empty.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing author", 0);
+						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing author", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 						break;
 					case "Name and author can't be null or empty.":
-						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name and author", 0);
+						JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), "Missing name and author", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					default:
 						break;
@@ -215,7 +215,7 @@ public class MenuManager {
 				frame.setDrawingTitle(nameInput, d.getAuthor());
 
 			} catch (DrawingException e) {
-				JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), nameInput, 0);
+				JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), nameInput, JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 
 			} catch (Exception e) {
@@ -238,7 +238,7 @@ public class MenuManager {
 				frame.setDrawingTitle(d.getName(), authorInput);;
 				
 			} catch (DrawingException e) {
-				JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), authorInput, 0);
+				JOptionPane.showMessageDialog(drawingPanel, e.getMessage(), authorInput, JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 
 			} catch (Exception e) {
@@ -277,7 +277,7 @@ public class MenuManager {
 						"Total area: " + d.getTotalArea() + "\n" + 
 						"Total circumference: " + d.getTotalCircumference(), 
 						"Info", 
-						1);
+						JOptionPane.INFORMATION_MESSAGE);
 		};
 	}
 	
@@ -290,13 +290,17 @@ public class MenuManager {
 
 			if(option == JFileChooser.APPROVE_OPTION) {
 				try {
-					Drawing loadedDrawing = FileHandler.load(chooser.getSelectedFile().getName());
+					String fileName = chooser.getSelectedFile().getName();
+					if(!fileName.endsWith(".shape"))
+						fileName += ".shape";
+
+					Drawing loadedDrawing = FileHandler.load(fileName);
 					drawingPanel.setDrawing(loadedDrawing);
 					frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
 					drawingPanel.repaint();
 				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(drawingPanel, "Could not open the drawing.", "alert", JOptionPane.ERROR_MESSAGE);
-            		System.err.println("Exception caught at load: " + e.getMessage());
+					JOptionPane.showMessageDialog(drawingPanel, "Could not find a file with that name.", "File not found", JOptionPane.WARNING_MESSAGE);
+            		System.err.println("Exception caught at load, could not find the file: " + e.getMessage());
 					e.printStackTrace();
 				} catch (Exception e) {
 					System.err.println("General exception: " + e.getMessage());
@@ -323,10 +327,10 @@ public class MenuManager {
 
 					if(!fileName.endsWith(".shape")) {
 						fileName += ".shape";
-						f2.renameTo(new File (fileName));
+						f.renameTo(new File (fileName));
 					}
 
-					if(f.exists() || f2.exists()) {
+					if(f.exists()) {
 						int actionResult = JOptionPane.showConfirmDialog(drawingPanel, "A file with the same name already exists. Do you want to overwrite the current?", 
 							"File already exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 						
