@@ -43,7 +43,8 @@ public class Circle extends Shape {
         double x1  = this.points.getFirst().getX();
         double x2  = this.points.getLast().getX();
 
-        return radius = Math.hypot(x2 - x1, y2 - y1);
+        radius = Math.hypot(x2 - x1, y2 - y1);
+        return radius;
     }
     
     @Override

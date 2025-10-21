@@ -41,8 +41,7 @@ public class FileHandler {
             } else {
                 bw.write("[not specified]");
             }
-        
-            // // TODO Breakout this to a method.
+
             List<Shape> shapes = drawing.getShapes();
             for (Shape shape : shapes) {
                 bw.newLine();
@@ -106,7 +105,6 @@ public class FileHandler {
             } else {
                 loadedDrawing.setAuthor(authorName);
             }
-            
 
             // TODO Fix the creation of shapes and give better names.
             for (String string : listOfStrings) {
@@ -126,7 +124,6 @@ public class FileHandler {
                     }
                     if (shapeType.equals("Rectangle")) {
                         Rectangle r = new Rectangle(x1, y1, x2, y2, color);
-                        
                         loadedDrawing.addShape(r);
                     }
                 }

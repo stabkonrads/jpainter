@@ -1,20 +1,16 @@
 package se.miun.stab2300.dt187g.jpaint.gui;
 
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
@@ -49,7 +45,6 @@ public class MenuManager {
         this.frame = frame;
         this.drawingPanel = drawingPanel;
         this.menu = new Menu();
-		
 		
         createMenu();
     }
@@ -185,35 +180,30 @@ public class MenuManager {
 							e.getMessage(), 
 							"Missing name", 
 							JOptionPane.ERROR_MESSAGE);
-						e.printStackTrace();
 						break;
 					case "Name can't be empty.":
 						JOptionPane.showMessageDialog(drawingPanel, 
 							e.getMessage(), 
 							"Missing name", 
 							JOptionPane.ERROR_MESSAGE);
-						e.printStackTrace();
 						break;	
 					case "Author cant't be null.":
 						JOptionPane.showMessageDialog(drawingPanel, 
 							e.getMessage(), 
 							"Missing author", 
 							JOptionPane.ERROR_MESSAGE);
-						e.printStackTrace();
 						break;
 					case "Author can't be empty.":
 						JOptionPane.showMessageDialog(drawingPanel, 
 							e.getMessage(), 
 							"Missing author", 
 							JOptionPane.ERROR_MESSAGE);
-						e.printStackTrace();
 						break;
 					case "Name and author can't be null or empty.":
 						JOptionPane.showMessageDialog(drawingPanel, 
 							e.getMessage(), 
 							"Missing name and author", 
 							JOptionPane.ERROR_MESSAGE);
-						e.printStackTrace();
 					default:
 						break;
 					}
@@ -240,7 +230,6 @@ public class MenuManager {
 					e.getMessage(), 
 					nameInput, 
 					JOptionPane.ERROR_MESSAGE);
-				e.printStackTrace();
 
 			} catch (Exception e) {
 				System.err.println("An error has occurred at createChangeNameAction. " + e.getMessage());
@@ -268,7 +257,6 @@ public class MenuManager {
 					e.getMessage(), 
 					authorInput, 
 					JOptionPane.ERROR_MESSAGE);
-				e.printStackTrace();
 
 			} catch (Exception e) {
 				System.err.println("An error has occurred at createChangeAuthorAction. " + e.getMessage());

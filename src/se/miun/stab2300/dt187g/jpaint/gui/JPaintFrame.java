@@ -16,9 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import se.miun.stab2300.dt187g.jpaint.Drawing;
-import se.miun.stab2300.dt187g.jpaint.DrawingException;
-
 /**
 * This class is the class that stiches together ColorPalettePanel, DrawingPanel and StatusBarPanel.
 * The class has a init() method that determins the size of the window, set exit action, set applikation name and icon.
@@ -208,7 +205,8 @@ public class JPaintFrame extends JFrame {
 
 			shapesComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JComboBox selectedShape = (JComboBox) e.getSource();
+					@SuppressWarnings("unchecked")
+					JComboBox<String> selectedShape = (JComboBox<String>) e.getSource();
 					drawingPanel.setActiveShape(selectedShape.getSelectedItem().toString());
 				}
 			});

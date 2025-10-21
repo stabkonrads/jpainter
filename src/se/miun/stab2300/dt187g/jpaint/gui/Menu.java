@@ -2,7 +2,6 @@ package se.miun.stab2300.dt187g.jpaint.gui;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
