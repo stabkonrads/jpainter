@@ -82,8 +82,26 @@ public class Drawing implements Drawable {
 
     public void addShape(Shape shape) {
         if (shape != null) {
-            shapes.add(shape);
+            if(!isPointsEquals(shape)){
+                shapes.add(shape);
+            }
         }
+    }
+
+    private boolean isPointsEquals(Shape shape) {
+        boolean isEqual = false;
+
+        var points = shape.getPoints(); 
+        double x1 = points.getFirst().getX();
+        double y1 = points.getFirst().getY();
+        double x2 = points.getLast().getX();
+        double y2 = points.getLast().getY();
+
+        if(x1 == x2 && y1 == y2) {
+            isEqual = true;
+        }
+
+        return isEqual;
     }
 
     public int getSize() {
@@ -125,7 +143,6 @@ public class Drawing implements Drawable {
             .forEach(System.out::println);
     }
 
-    // Iterates through the shapes and draws them on the drawing.
     @Override
     public void draw(Graphics g) {
         shapes.stream()

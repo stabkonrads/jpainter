@@ -35,8 +35,12 @@ public class TestClass2 {
 		// Set name and author.
 		System.out.println("\nSetting name and author...");
 		
-		d1.setName("Mona Lisa");
-		d1.setAuthor("L. da Vinci");
+		try {
+			d1.setName("Mona Lisa");
+			d1.setAuthor("L. da Vinci");
+			
+		} catch (DrawingException e) {
+		}
 		
 		System.out.println(d1);
 		

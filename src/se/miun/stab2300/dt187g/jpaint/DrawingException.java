@@ -1,6 +1,5 @@
 package se.miun.stab2300.dt187g.jpaint;
 
-
 /**
 * This exception is a custom exception to define if it's a DrawingException that has happened.
 * It's used in a try catch element to handle if the case of input is null.

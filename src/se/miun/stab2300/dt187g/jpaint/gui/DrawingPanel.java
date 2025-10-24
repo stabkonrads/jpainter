@@ -37,11 +37,6 @@ public class DrawingPanel extends JPanel {
 	private int x2;
 	private int y2;
 
-	/*
-	 * Beroende på vilken konstruktor som anropas så kommer antingen 
-	 * bakgrunden för denna komponent sättas till den färg som skickas som argument,
-	 * alternativt sätts bakgrunden till vit (Color.WHITE).
-	 */
 	public DrawingPanel() {
 		this.setBackground(Color.WHITE);
 		drawIsActive = false;

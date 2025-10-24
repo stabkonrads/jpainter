@@ -81,22 +81,23 @@ public class FileHandler {
             BufferedReader output = new BufferedReader(new FileReader(fileName));
             String row = output.readLine();
             
-            ArrayList<String> listOfStrings = new ArrayList<>();
+            ArrayList<String> loadedShapesInfo = new ArrayList<>();
 
             String drawingName = "";
             String authorName = "";
             
             while (row != null) {
                 if(row == "[not specified]") {
-                    listOfStrings.add(row);
+                    loadedShapesInfo.add(row);
                 }
                 else {
-                    listOfStrings.add(row);
+                    loadedShapesInfo.add(row);
                 }
                 row = output.readLine();
             }
-            drawingName = listOfStrings.get(0);
-            authorName = listOfStrings.get(1);
+            drawingName = loadedShapesInfo.get(0);
+            authorName = loadedShapesInfo.get(1);
+            
             if(drawingName.equals("[not specified]")) {
             } else {
                 loadedDrawing.setName(drawingName);
@@ -106,18 +107,15 @@ public class FileHandler {
                 loadedDrawing.setAuthor(authorName);
             }
 
-            // TODO Fix the creation of shapes and give better names.
-            for (String string : listOfStrings) {
-                String[] shapeArray = string.split(",");
-                String shapeType = shapeArray[0];
-                
+            for (String shapeInfoLine : loadedShapesInfo) {
+                String[] shapeInfoArray = shapeInfoLine.split(",");
+                String shapeType = shapeInfoArray[0];
                 if(shapeType.equals("Circle") || shapeType.equals("Rectangle")) {
-                    int x1 = Integer.parseInt(shapeArray[1]);
-                    int y1 = Integer.parseInt(shapeArray[2]);
-                    int x2 = Integer.parseInt(shapeArray[3]);
-                    int y2 = Integer.parseInt(shapeArray[4]);
-                    String color = shapeArray[shapeArray.length-1];
-
+                    int x1 = Integer.parseInt(shapeInfoArray[1]);
+                    int y1 = Integer.parseInt(shapeInfoArray[2]);
+                    int x2 = Integer.parseInt(shapeInfoArray[3]);
+                    int y2 = Integer.parseInt(shapeInfoArray[4]);
+                    String color = shapeInfoArray[shapeInfoArray.length-1];
                     if (shapeType.equals("Circle")) {
                         Circle c = new Circle(x1, y1, x2, y2, color);
                         loadedDrawing.addShape(c);
@@ -128,9 +126,7 @@ public class FileHandler {
                     }
                 }
             }
-
             output.close();
-            
         } catch (FileNotFoundException e) {
             System.err.println("Error while loading, file not found: " + e.getMessage());
             e.printStackTrace();
@@ -145,7 +141,6 @@ public class FileHandler {
             System.err.println("General exception: " + e.getMessage());
             e.printStackTrace();
         }
-
         return loadedDrawing;
     }
 }

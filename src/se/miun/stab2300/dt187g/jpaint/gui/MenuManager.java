@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -74,7 +75,6 @@ public class MenuManager {
 
 		menu.getJMenu(0).addSeparator();
 		menu.addJMenuItem(sFile, "Exit", al -> System.exit(0));
-
 	}
 
     private void createEditMenu() {
@@ -89,14 +89,6 @@ public class MenuManager {
 		menu.addJMenuItem(sDrawing, "Name...", createChangeNameAction());
 		menu.addJMenuItem(sDrawing, "Author...", createChangeAuthorAction());
 
-		/* Denna rad, som du inte får ta bort, kommer skapa ett NullException.
-		 * Du måste hantera denna situation i Menu-klassen. I vanliga fall
-		 * hade det varit rimligt att ett Exception kastades (klienten bör 
-		 * i vanliga fall göras medveten om att den försöker skapa ett 
-		 * JMenuItem till en JMenu som inte existerar), men nu räcker
-		 * det med att ingenting alls händer i det läget man anropar
-		 * addJMenuItem med en sträng som inte kan hittas.
-		 */
 		menu.addJMenuItem("This JMenu doesn't exist", "abc");
 
 	}
@@ -139,34 +131,43 @@ public class MenuManager {
 		}
 		menu.add(jMenu);
 	}
-    
-    /*
-     * Flera av metoderna nedan kommer anropa JOptionPane.showInputDialog(...).
-     * Denna metod returnerar en String. Tänk på att om användaren trycker på
-     * "Cancel" så kommer null att returneras. När en användare trycker på "Cancel"
-     * så ska givetvis ingenting alls hända; inget felmeddelande till användaren,
-     * inget ändring av det grafiska gränssnittets tillstånd (en teckning ska
-     * inte plötsligt få namnet "null"). Jag har sett många inlämningar där
-     * "Cancel" har hanterats på tämligen oväntade sätt. Så håll det i åtanke,
-     * att Cancel/Avbryt innebär just den saken.
-     * 
-     */
-    
+
     private ActionListener createNewDrawingAction() {
 		return al -> {
-			String nameInputDialog = JOptionPane.showInputDialog(drawingPanel, 
-				"Enter name of the drawing: ",
-				"Enter drawing name", 
-				JOptionPane.QUESTION_MESSAGE);
-			if (nameInputDialog == null)
-				return;
-
-			String authorInputDialog = JOptionPane.showInputDialog(drawingPanel, 
-				"Enter name of the author: ",
-				"Enter author name", 
-				JOptionPane.QUESTION_MESSAGE);
-			if(authorInputDialog == null)
-				return;
+			String nameInputDialog = "";
+			while (nameInputDialog.length() < 1) {
+				nameInputDialog = JOptionPane.showInputDialog(drawingPanel, 
+					"Enter name of the drawing: ",
+					"Enter drawing name", 
+					JOptionPane.QUESTION_MESSAGE);
+				if (nameInputDialog == null)
+					return;
+				String trimmedName = nameInputDialog.trim();
+				if(trimmedName.isEmpty()) {
+					JOptionPane.showMessageDialog(drawingPanel, 
+						"Name cannot be empty", 
+						"Empty field", 
+						JOptionPane.WARNING_MESSAGE);
+					nameInputDialog = "";
+				}
+			}
+			String authorInputDialog = "";
+			while (authorInputDialog.length() < 1) {
+				authorInputDialog = JOptionPane.showInputDialog(drawingPanel, 
+					"Enter name of the author: ",
+					"Enter author name", 
+					JOptionPane.QUESTION_MESSAGE);
+				if(authorInputDialog == null)
+					return;
+				String trimmedAuthor = authorInputDialog.trim();
+				if(trimmedAuthor.isEmpty()) {
+					JOptionPane.showMessageDialog(drawingPanel, 
+						"Author cannot be empty",
+						"Empty field",
+						JOptionPane.WARNING_MESSAGE);
+					authorInputDialog = "";
+				}
+			}
 
 			try {
 					Drawing createdDrawing = new Drawing(nameInputDialog, authorInputDialog);
@@ -213,12 +214,23 @@ public class MenuManager {
 
     private ActionListener createChangeNameAction() {
 		return al -> {
-			String nameInput = JOptionPane.showInputDialog(drawingPanel,
-				"Would you like to change name for drawing?", 
-				"Change name for drawing?", 
-				JOptionPane.QUESTION_MESSAGE);
-			if ( nameInput == null)
-			return;
+			String nameInput = "";
+			while (nameInput.length() < 1) {
+				nameInput = JOptionPane.showInputDialog(drawingPanel,
+					"Would you like to change name for drawing?", 
+					"Change name for drawing?", 
+					JOptionPane.QUESTION_MESSAGE);
+				if ( nameInput == null)
+					return;
+				String trimmedInput = nameInput.trim();
+				if(trimmedInput.isEmpty()){
+					JOptionPane.showMessageDialog(drawingPanel, 
+						"Name cannot be empty", 
+						"Empty field", 
+						JOptionPane.WARNING_MESSAGE);
+					nameInput = "";
+				}
+			}
 
 			try {
 				Drawing d = drawingPanel.getDrawing();
@@ -240,12 +252,23 @@ public class MenuManager {
 
 	private ActionListener createChangeAuthorAction() {
 		return al -> {
-			String authorInput = JOptionPane.showInputDialog(drawingPanel,
-				"Would you like to change name of author of the painting?", 
-				"Would you like to change name of author of the painting?", 
-				JOptionPane.QUESTION_MESSAGE);
-			if ( authorInput == null)
-			return;
+			String authorInput = "";
+			while (authorInput.length() < 1) {
+				authorInput = JOptionPane.showInputDialog(drawingPanel,
+					"Would you like to change author of the painting?", 
+					"Would you like to change author of the painting?", 
+					JOptionPane.QUESTION_MESSAGE);
+				if (authorInput == null)
+				return;
+				String trimmedInput = authorInput.trim();
+				if(trimmedInput.isEmpty()) {
+					JOptionPane.showMessageDialog(drawingPanel, 
+						"Author cannot be empty", 
+						"Empty field", 
+						JOptionPane.WARNING_MESSAGE);
+					authorInput = "";
+				}
+			}
 			
 			try {
 				Drawing d = drawingPanel.getDrawing();
@@ -300,90 +323,99 @@ public class MenuManager {
 	
 	private ActionListener createLoadAction() {
 		return al -> {
-			// TODO for assignment 6
-			String currentFolder = System.getProperty("user.dir");
-			JFileChooser chooser = new JFileChooser(currentFolder);
-			int option = chooser.showOpenDialog(drawingPanel);
-
-			if(option == JFileChooser.APPROVE_OPTION) {
-				try {
-					String fileName = chooser.getSelectedFile().getName();
-					if(!fileName.endsWith(".shape"))
-						fileName += ".shape";
-
-					Drawing loadedDrawing = FileHandler.load(fileName);
-					drawingPanel.setDrawing(loadedDrawing);
-					frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
-					drawingPanel.repaint();
-					drawingPanel.setShapeFilter(allShapes);
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(drawingPanel, 
-						"Could not find a file with that name.", 
-						"File not found", 
-						JOptionPane.WARNING_MESSAGE);
-            		System.err.println("Exception caught at load, could not find the file: " + e.getMessage());
-					e.printStackTrace();
-				} catch (Exception e) {
-					System.err.println("General exception: " + e.getMessage());
-					e.printStackTrace();
-				} 
-			} else {
-				return;
-			}
+			try {
+				String currentFolder = System.getProperty("user.dir");
+				JFileChooser chooser = new JFileChooser(currentFolder);
+				int option = chooser.showOpenDialog(drawingPanel);
+				
+				if(option == JFileChooser.APPROVE_OPTION) {
+						String fileName = chooser.getSelectedFile().getName();
+						if(!fileName.endsWith(".shape"))
+							fileName += ".shape";
+				
+						Drawing loadedDrawing = FileHandler.load(fileName);
+						drawingPanel.setDrawing(loadedDrawing);
+						frame.setDrawingTitle(loadedDrawing.getName(), loadedDrawing.getAuthor());
+						drawingPanel.repaint();
+						drawingPanel.setShapeFilter(allShapes);
+					} else {
+						return;
+					}
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(drawingPanel, 
+					"Could not find a file with that name.", 
+					"File not found", 
+					JOptionPane.WARNING_MESSAGE);
+				System.err.println("Exception caught at load, could not find the file: " + e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e) {
+				System.err.println("General exception: " + e.getMessage());
+				e.printStackTrace();
+			} 
 		};
 	}
 
 	private ActionListener createSaveAction() {
 		return al -> {
-			// TODO for assignment 6
-			String currentFolder = System.getProperty("user.dir");
-			JFileChooser chooser = new JFileChooser(currentFolder);
-			int result = chooser.showSaveDialog(drawingPanel);
+			try {
+				String currentFolder = System.getProperty("user.dir");
+				JFileChooser chooser = new JFileChooser(currentFolder);
+				int result = chooser.showSaveDialog(drawingPanel);
 
-			if(result == JFileChooser.APPROVE_OPTION) {
-				try {
-					File f = chooser.getSelectedFile();
-					String fileName = chooser.getSelectedFile().getName();
-
-					if(!fileName.endsWith(".shape")) {
-						fileName += ".shape";
-						f.renameTo(new File (fileName));
-					}
-
-					if(f.exists()) {
-						int actionResult = JOptionPane.showConfirmDialog(drawingPanel, 
-							"A file with the same name already exists. Do you want to overwrite the current?", 
-							"File already exists", 
-							JOptionPane.YES_NO_OPTION, 
-							JOptionPane.WARNING_MESSAGE);
-						
-						if(actionResult == JOptionPane.NO_OPTION) {
-							return;
+				if(result == JFileChooser.APPROVE_OPTION) {
+						File f = chooser.getSelectedFile();
+						String fileName = f.getName().trim();
+	
+						if(fileName.isEmpty()) {
+							JOptionPane.showConfirmDialog(drawingPanel, 
+								"Name cannot be empty.", 
+								"Warning", 
+								JOptionPane.ERROR_MESSAGE);
+							 return;
 						}
+	
+						if(!fileName.endsWith(".shape")) {
+							fileName += ".shape";
+							f.renameTo(new File (fileName));
+						}
+	
+						if(f.exists()) {
+							int actionResult = JOptionPane.showConfirmDialog(drawingPanel, 
+								"A file with the same name already exists. Do you want to overwrite the current?", 
+								"File already exists", 
+								JOptionPane.YES_NO_OPTION, 
+								JOptionPane.WARNING_MESSAGE);
+							
+							if(actionResult == JOptionPane.NO_OPTION) {
+								return;
+							}
+						}
+						Drawing d = drawingPanel.getDrawing();
+						
+						FileHandler.save(d, fileName);
+					} else {
+						return;
 					}
-					Drawing d = drawingPanel.getDrawing();
-					String saveName = chooser.getSelectedFile().getName();
-					String trimmedSaveName = saveName.trim();
-
-					if(trimmedSaveName.isEmpty()) {
-						JOptionPane.showConfirmDialog(drawingPanel, 
-							"Name cannot be empty.", 
-							"Warning.", 
-							JOptionPane.ERROR_MESSAGE);
-				 		return;
-					}
-
-					FileHandler.save(d, saveName);
-				} catch (Exception e) {
-					JOptionPane.showConfirmDialog(drawingPanel, 
-						"An error has occured while saving the drawing.",
-						"Warning", 
-						JOptionPane.ERROR_MESSAGE);
-					System.err.println("Exception error: " + e.getMessage());
-					e.printStackTrace();
-				}
-			} else {
-				return;
+			} catch (NullPointerException e) {
+				JOptionPane.showMessageDialog(drawingPanel, 
+				"File cannot be empty", 
+				"Warning", 
+				JOptionPane.ERROR_MESSAGE);
+				System.err.println("NullPointerException: " + e.getMessage());
+			} catch (InvalidPathException e) {
+				JOptionPane.showMessageDialog(drawingPanel, 
+				"Invalid filepath has been entered.", 
+				"Warning", 
+				JOptionPane.ERROR_MESSAGE);
+				System.err.println("InvalidPathException: " + e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(drawingPanel, 
+					"An error has occured while saving the drawing.",
+					"Warning", 
+					JOptionPane.ERROR_MESSAGE);
+				System.err.println("Exception error: " + e.getMessage());
+				e.printStackTrace();
 			}
 		};
 	}
