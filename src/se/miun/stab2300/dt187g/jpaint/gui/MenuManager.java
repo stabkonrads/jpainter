@@ -173,6 +173,7 @@ public class MenuManager {
 					Drawing createdDrawing = new Drawing(nameInputDialog, authorInputDialog);
 					drawingPanel.setDrawing(createdDrawing);
 					frame.setDrawingTitle(nameInputDialog, authorInputDialog);
+					frame.repaint();
 				} catch (DrawingException e) {
 
 				switch (e.getMessage()) {
