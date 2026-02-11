@@ -23,7 +23,7 @@ JPainter is a graphical drawing application built with Java Swing that provides 
 ## Project Structure
 
 ```
-java-homework/
+jpainter/
 ├── src/
 │   ├── App.java                                    # Main application entry point
 │   └── se/miun/stab2300/dt187g/jpaint/
