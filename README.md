@@ -6,6 +6,10 @@ A Java-based drawing application that allows users to create, edit, save, and lo
 
 JPainter is a graphical drawing application built with Java Swing that provides an intuitive interface for creating drawings with circles and rectangles. The application supports color selection, shape filtering, and file persistence using a custom `.shape` file format.
 
+## Screenshots
+
+![Main Window](img/screenshots/jpaint-screenshot.png)
+
 ## Features
 
 - **Shape Drawing**: Create circles and rectangles with mouse interactions
